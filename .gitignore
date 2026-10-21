@@ -1,0 +1,107 @@
+# Gradle
+.gradle/
+build/
+*.iml
+
+# Android
+*.apk
+*.ap_
+*.aab
+*.aar
+*.so
+*.dex
+*.class
+local.properties
+*.keystore
+*.jks
+*.jceks
+*.jceks
+
+# IDE
+.idea/
+*.iws
+*.ipr
+*.swp
+*.swo
+.vscode/
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.log.*
+hs_err_pid*.log
+
+# Test reports
+*.ec
+coverage/
+*.jacoco
+
+# Build artifacts
+*.jar
+*.war
+*.ear
+*.tar.gz
+*.zip
+*.tar
+*.apk
+*.aab
+
+# Local config
+local.properties
+gradle.properties.local
+
+# IDE specific
+.idea/
+*.iws
+*.ipr
+*.iml
+out/
+
+# Caches
+~/
+.cache/
+.gradle/
+.m2/
+
+# Kotlin
+*.kt.bin
+*.kts.bin
+
+# Compose
+composeApp/build/
+
+# Room
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Secrets (never commit)
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.jceks
+*.jceks
+*.properties
+*.env
+.env
+.env.local
+.env.*.local
+
+# Gradle wrapper
+gradle/wrapper/gradle-wrapper.jar
+
+# Build scan
+.gradle/enterprise/
+
+# Coverage
+*.exec
+*.ec
