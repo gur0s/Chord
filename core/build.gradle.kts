@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.multiplatform")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -32,7 +32,6 @@ kotlin {
                 api(libs.ktor.serialization.kotlinx.json)
                 api(libs.okio)
                 api(libs.kotlinx.datetime)
-                api(libs.kotlinx.coroutines.core)
             }
         }
         val androidMain by getting {

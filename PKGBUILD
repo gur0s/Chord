@@ -19,7 +19,6 @@ depends=(
 )
 makedepends=(
     'java-environment>=21'
-    'gradle'
     'git'
 )
 optdepends=(
@@ -28,31 +27,31 @@ optdepends=(
 )
 provides=('chord')
 conflicts=('chord-git')
-source=("Chord-$pkgver.tar.gz::https://github.com/gur0s/Chord/releases/download/v$pkgver/Chord-$pkgver.tar.gz")
+source=("Chord-1.0.0.tar.gz")
 sha256sums=('SKIP')
 
 build() {
-    cd "Chord-$pkgver"
+    cd "$srcdir"
     
     # Build with Gradle
     ./gradlew :composeApp:packageTarGz --no-daemon
 }
 
 package() {
-    cd "Chord-$pkgver"
+    cd "$srcdir"
     
     # Find the built distribution
-    local dist_dir=$(find composeApp/build/distributions -name "Chord-*.tar.gz" | head -1)
-    if [[ -z "$dist_dir" ]]; then
+    local dist_file=$(find composeApp/build/distributions -name "Chord-*.tar.gz" | head -1)
+    if [[ -z "$dist_file" ]]; then
         echo "Error: Distribution not found"
         return 1
     fi
     
     # Extract and install
-    tar -xzf "$dist_dir" -C "$pkgdir"
+    tar -xzf "$dist_file" -C "$pkgdir"
     
-    # Move to proper locations
-    local extracted_dir=$(basename "$dist_dir" .tar.gz)
+    # Find extracted directory
+    local extracted_dir=$(basename "$dist_file" .tar.gz)
     
     # Install binary
     install -dm755 "$pkgdir/usr/bin"
@@ -75,12 +74,6 @@ Type=Application
 Categories=Audio;Music;Player;
 StartupNotify=true
 EOF
-    
-    # Icon (if available)
-    if [[ -f "$extracted_dir/lib/app-icon.png" ]]; then
-        install -dm755 "$pkgdir/usr/share/icons/hicolor/256x256/apps"
-        cp "$extracted_dir/lib/app-icon.png" "$pkgdir/usr/share/icons/hicolor/256x256/apps/chord.png"
-    fi
     
     # License
     install -dm755 "$pkgdir/usr/share/licenses/$pkgname"

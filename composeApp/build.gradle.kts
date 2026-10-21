@@ -1,54 +1,34 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.multiplatform")
+    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.serialization)
-    id("com.jetbrains.compose")
+    alias(libs.plugins.compose)
 }
 
-kotlin {
-    android()
-    jvm("desktop")
-}
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-android {
-    namespace = "com.gur0s.chord"
-    compileSdk = 37
-
-    defaultConfig {
-        applicationId = "com.gur0s.chord"
-        minSdk = 26
-        targetSdk = 37
-        versionCode = 1
-        versionName = "1.0.0"
-    }
-}
-
-compose.desktop {
-    application {
-        mainClass = "com.gur0s.chord.MainKt"
-        nativeDistributions {
-            targetFormats(TargetFormat.DMG, TargetFormat.MSI, TargetFormat.DEB, TargetFormat.RPM, TargetFormat.TAR_GZ)
-        }
-    }
+repositories {
+    google()
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 dependencies {
-    val composeBom = platform("org.jetbrains.compose.compose-bom:2025.09.00")
+    val composeBom = platform("org.jetbrains.compose.compose-bom:2024.10.00")
     implementation(composeBom)
-    implementation(compose.material3)
-    implementation(compose.runtime)
-    implementation(compose.ui)
-    implementation(compose.foundation)
-    implementation(compose.animation)
-    implementation(compose.material.icons.extended)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.cio)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.okio)
+    implementation("org.jetbrains.compose.material3:material3")
+    implementation("org.jetbrains.compose.runtime:runtime")
+    implementation("org.jetbrains.compose.ui:ui")
+    implementation("org.jetbrains.compose.foundation:foundation")
+    implementation("org.jetbrains.compose.animation:animation")
+    implementation("org.jetbrains.compose.material:material-icons-extended")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+    implementation("io.ktor:ktor-client-core:3.6.0")
+    implementation("io.ktor:ktor-client-cio:3.6.0")
+    implementation("io.ktor:ktor-client-content-negotiation:3.6.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.6.0")
+    implementation("com.squareup.okio:okio:3.10.0")
     implementation(project(":core"))
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
@@ -60,43 +40,6 @@ dependencies {
     implementation("androidx.media3:media3-session:1.6.1")
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
-}
-
-android {
-    namespace = "com.gur0s.chord"
-    compileSdk = 37
-
-    defaultConfig {
-        applicationId = "com.gur0s.chord"
-        minSdk = 26
-        targetSdk = 37
-        versionCode = 1
-        versionName = "1.0.0"
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "2.0.0"
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    packaging {
-        resources {
-            excludes += "/META-INF/*.kotlin_module"
-        }
-    }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -110,7 +53,13 @@ compose.desktop {
     application {
         mainClass = "com.gur0s.chord.MainKt"
         nativeDistributions {
-            targetFormats(TargetFormat.DMG, TargetFormat.MSI, TargetFormat.DEB, TargetFormat.RPM, TargetFormat.TAR_GZ)
+            targetFormats(
+                TargetFormat.DMG,
+                TargetFormat.MSI,
+                TargetFormat.DEB,
+                TargetFormat.RPM,
+                TargetFormat.TAR_GZ
+            )
         }
         packageName = "Chord"
         packageVersion = "1.0.0"
